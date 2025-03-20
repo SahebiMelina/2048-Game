@@ -1,27 +1,21 @@
-def load_data(filename='data.txt'):
-    game_data = {}
+import os
+os.chdir('C:/Users/lenovo/Desktop/Game 2048')
+def load_data():
+    filename = 'data.txt'
+
+    file_info = {}
+    
     try:
-        with open(filename, 'r', encoding='utf-8') as file:
+        with open(filename, 'r') as file:
             for line in file:
-                key, value = line.strip().split(': ')
-                game_data[key] = value if not value.isdigit() else int(value)
-        return game_data
+                key, value = line.strip().split('=', 1)
+                file_info[key.strip()] = value.strip()
+        return file_info
     except FileNotFoundError:
-        print(f"Error: File '{filename}' not found")
+        print(f"Error: The file '{filename}' was not found!")
         return {}
     except Exception as e:
-        print(f"Error loading data: {str(e)}")
+        print(f"An error occurred: {e}")
         return {}
-
-def save_data(filename='data.txt', data=None):
-    if data is None:
-        data = {}
-    try:
-        with open(filename, 'w', encoding='utf-8') as file:
-            for key, value in data.items():
-                file.write(f'{key}: {value}\n')  # Added newline character
-        print(f'Data saved successfully to {filename}!')
-    except Exception as e:
-        print(f"Error saving data: {str(e)}")                 
-
-
+data = load_data()
+print("Loaded data:", data)
